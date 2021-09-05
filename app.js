@@ -1,4 +1,5 @@
 const prompt = require('prompt-sync')();
+const parse = require('csv-parse');
 
 const isAlphabet =  /^[a-zA-Z]+$/;
 
@@ -27,23 +28,93 @@ function countLetter() {
     }
 
     while(letter.length!=0){
-        console.log('here')
         let countLength = letter.length;
         let firstLetter = letter[0]
-
-        console.log(countLength)
-        console.log(firstLetter)
         letter = letter.filter(let=>{
             return let!==firstLetter
         })
-        console.log(letter)
 
         letterCount.push(countLength-letter.length)
     }
 }
+console.log(matchPercentage(letterCount));
 
-console.log(letterCount)
+function matchPercentage(countLetter){
+    let newSum = []
+    for(let i=0; i<countLetter.length;i++){
+        if(i>countLetter.length-1-i){
+            break;
+        }
+        if(i===countLetter.length-1-i){
+            newSum.push(countLetter[i])
+            break;
+        }else {
+            let num = countLetter[i]+countLetter[(countLetter.length-1)-i]
+            if(num>9){
+
+                newSum.push(parseInt(num.toString().charAt(0)))
+                newSum.push(parseInt(num.toString().charAt(1)))
+            }else{
+              
+                newSum.push(num)
+
+            }
+           
+        }
+    }
+
+    if(parseInt(newSum.join(""))<=100){
+        return parseInt(newSum.join(""));
+    }else{
+        return matchPercentage(newSum)
+    }
+}
+
+const males = [];
+const females =[];
+//const users =[];
+//fs.createReadStream('data.csv')
+ // .pipe(csv())
+ // .on('data', function (row){
+    //  const user = {
+     //   name: row,
+     //   gender: row
+   // }
+  // users.push(user);
+   // console.log(row);
+   
+    //console.log(users);
+ // })
 
 
-
-
+ const fs = require('fs'); 
+ let statusF = true;
+ let statusM = true;
+ const data = [];
+ fs.createReadStream('data2.csv')
+   .pipe(parse({ delimiter: ';' }))
+   .on('data', (r) => {
+    // console.log(r);
+     data.push(r); 
+            
+   })
+   .on('end', () => {
+       for(let i= 0; i<data.length;i++)
+{
+           const gender = data[i][1];
+           const personName = data[i][0];
+           console.log(data[i]);
+           console.log(gender);
+        
+    if(gender.toLowerCase() === 'f')
+    {
+         females.push(personName);
+    }
+     else if(gender.toLowerCase() === 'm')
+    {
+        males.push(personName);
+    }  
+       
+}
+    
+  });

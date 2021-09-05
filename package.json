@@ -1,0 +1,23 @@
+{
+  "name": "good-match",
+  "version": "1.0.0",
+  "description": "Graduate assessment Good match",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Perez2226/good-match.git"
+  },
+  "author": "Perez Govender",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Perez2226/good-match/issues"
+  },
+  "homepage": "https://github.com/Perez2226/good-match#readme",
+  "dependencies": {
+    "prompt-sync": "^4.2.0"
+  }
+}
